@@ -1,0 +1,97 @@
+final_list = []
+births_per_month = {}
+births_per_week = {}
+dictMonth = {}
+dictWeek = {}
+dictYear = {}
+dictDay = {}
+
+def read_csv(file):
+    f = open(file, 'r')
+    bData = f.read()
+    birthData = bData.split('\n')
+    for item in birthData[1:len(birthData)]:
+        newL = item.split(',')
+        final_list.append(newL)
+    for st in final_list:
+        for n in range(0,5):
+            st[n] = int(st[n])
+    return final_list
+
+bFile = "US_births_1994-2003_CDC_NCHS.csv"
+cdc_list = read_csv(bFile)
+#print(cdc_list[0:10])
+
+def month_births(bList):
+    for item in bList:
+        if item[1] in births_per_month:
+            births_per_month[item[1]] += item[4]
+        else:
+            births_per_month[item[1]] = item[4]
+    return births_per_month
+
+cdc_month_births = month_births(cdc_list)
+#print(births_per_month)
+
+def dow_births(myList):
+    for item in myList:
+        if item[3] in births_per_week:
+            births_per_week[item[3]] += item[4]
+        else:
+            births_per_week[item[3]] = item[4]
+    return births_per_week
+
+cdc_day_births = dow_births(cdc_list)
+#print(cdc_day_births)
+
+def calc_counts(brList, n, birthDict):
+    for item in brList:
+        if item[n] in birthDict:
+            birthDict[item[n]] += item[4]
+        else:
+            birthDict[item[n]] = item[4]
+    return birthDict
+
+cdc_month_births = calc_counts(cdc_list, 1, dictMonth)
+cdc_dow_births = calc_counts(cdc_list, 3, dictWeek)
+cdc_year_births = calc_counts(cdc_list, 0, dictYear)
+cdc_dom_births = calc_counts(cdc_list, 2, dictDay)
+print(cdc_year_births)
+print(cdc_month_births)
+print(cdc_dow_births)
+print(cdc_dom_births)
+
+myList = []
+def MinMax(myDict, val):
+    for k,v in myDict.items():
+        myList.append(v)
+    if val == 'min':
+        myVal = min(myList)
+    else:
+        myVal = max(myList)
+    return myVal
+
+myD = {1: 5789166, 2: 6446196, 3: 6322855, 
+       4: 6288429, 5: 6233657, 6: 4562111, 7: 4079723}
+
+minVal = MinMax(myD, 'min')
+maxVal = MinMax(myD, 'max')
+print('Minimum value is:', minVal)
+print('Maximum value is:', maxVal)
+
+finalList = []
+def read_ssa(file):
+    f = open(file, 'r')
+    bData = f.read()
+    birthData = bData.split('\n')
+    for item in birthData[0:len(birthData)]:
+        newL = item.split(',')
+        finalList.append(newL)
+    #for st in final_list:
+    #   for n in range(0,5):
+    #       st[n] = int(st[n])
+    return finalList
+
+SSAFile = 'US_births_2000-2014_SSA.csv'
+ssa_file = read_ssa(SSAFile)
+print(ssa_file[0:6])
