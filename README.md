@@ -1,6 +1,6 @@
 # US_Births_Analysis_1994-2003_CDC
 
-Compiled by: FiveThirtyEight (Collected by CDC NCHS 1994-2003)
+Original Data Compiled by: FiveThirtyEight (Collected by CDC NCHS 1994-2003)
 
 File name: US_births_1994-2003_CDC_NCHS.csv
 
